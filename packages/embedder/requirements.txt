@@ -1,0 +1,4 @@
+tiktoken==0.9.0
+nltk==3.9.1
+openai==1.12.0
+httpx==0.24.1 
