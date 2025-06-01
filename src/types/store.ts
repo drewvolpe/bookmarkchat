@@ -14,12 +14,14 @@ export interface Conversation {
 }
 
 export interface Bookmark {
-  title: string;
+  id: string;
   url: string;
+  title: string;
   description?: string;
-  tags?: string[];
-  timestamp?: string;
-  similarity: number;
+  tags: string[];
+  createdAt: number;
+  lastAccessed: Date;
+  similarity?: number;
 }
 
 export interface Settings {
@@ -48,7 +50,7 @@ export interface Store {
   // Actions
   addMessage: (content: string) => Promise<void>;
   createConversation: () => void;
-  addBookmark: (bookmark: Omit<Bookmark, 'id' | 'createdAt' | 'lastAccessed'>) => void;
+  addBookmark: (bookmark: Omit<Bookmark, 'id' | 'createdAt' | 'lastAccessed' | 'similarity'>) => void;
   updateSettings: (settings: Partial<Settings>) => void;
   setView: (view: UIState['view']) => void;
   toggleSidebar: () => void;
