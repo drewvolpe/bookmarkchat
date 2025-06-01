@@ -1,54 +1,51 @@
 # Bookmark Chat
 
-Chat with your Pinboard.in bookmarks using AI. This application allows you to have natural conversations about your saved bookmarks and their content.
+A web application that allows you to chat with your bookmarks using AI.
+
+## Features
+
+- Chat interface for interacting with your bookmarks
+- Bookmark management with tags and search
+- Settings for customizing the AI model and parameters
+- Dark mode support
+- Responsive design
+
+## Getting Started
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+## Tech Stack
+
+- Next.js 14
+- React 18
+- TypeScript
+- Tailwind CSS
+- Zustand
+- Heroicons
 
 ## Project Structure
 
 ```
-/bookmark-chat-app
-├── /apps
-│   ├── /web            # Next.js frontend (chat UI) TODO
-│   └── /api            # FastAPI backend service TODO
-├── /packages
-│   ├── /fetcher        # Shared logic to fetch/cache Pinboard + webpage content
-│   └── /embedder       # Embedding & vector store logic
-├── /data
-│   └── /cache          # Filesystem cache of bookmarks + page content
-├── /scripts
-│   └── sync_bookmarks.py  # CLI to fetch + embed bookmark data
+src/
+  ├── app/              # Next.js app directory
+  ├── components/       # React components
+  │   ├── chat/        # Chat-related components
+  │   ├── bookmarks/   # Bookmark-related components
+  │   ├── settings/    # Settings-related components
+  │   └── layout/      # Layout components
+  ├── store/           # Zustand store
+  ├── types/           # TypeScript types
+  └── utils/           # Utility functions
 ```
-
-## Development
-
-This is a monorepo project using pnpm workspaces. To get started:
-
-1. Install python env and dependencies:
-```bash
-python3 -m venv .venv && source .venv/bin/activate && pip install -r packages/fetcher/requirements.txt ; packages/embedder/requirements.txt
-```
-
-2. Fetch bookmarks
-```bash
-python3 packages/fetcher/pinboard_fetcher.py
-```
-
-3. Run embedder
-```bash
-python3 packages/embedder/embedder.py
-```
-
-3. Run the development servers:
-```bash
-# Terminal 1: Frontend
-cd apps/web
-pnpm dev
-
-# Terminal 2: Backend
-cd apps/api
-pnpm dev
-```
-
-
 
 ## License
 

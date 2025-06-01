@@ -7,12 +7,16 @@ from pathlib import Path
 from typing import List, Dict, Set
 import openai
 from dotenv import load_dotenv
+from chunker import TextChunker
 
 # Load environment variables
 load_dotenv()
 
 # Initialize OpenAI client
 client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+# Initialize text chunker
+chunker = TextChunker(target_tokens=500)  # Using 500 tokens as target size
 
 def get_project_root() -> Path:
     """Get the absolute path to the project root directory."""
@@ -74,27 +78,6 @@ def load_page_content(url_hash: str) -> str:
     with open(cache_path, 'r', encoding='utf-8') as f:
         return f.read()
 
-def chunk_text(text: str, chunk_size: int = 1000) -> List[str]:
-    """Split text into chunks of approximately chunk_size characters."""
-    words = text.split()
-    chunks = []
-    current_chunk = []
-    current_size = 0
-    
-    for word in words:
-        word_size = len(word) + 1  # +1 for space
-        if current_size + word_size > chunk_size and current_chunk:
-            chunks.append(' '.join(current_chunk))
-            current_chunk = []
-            current_size = 0
-        current_chunk.append(word)
-        current_size += word_size
-    
-    if current_chunk:
-        chunks.append(' '.join(current_chunk))
-    
-    return chunks
-
 def get_embedding(text: str) -> List[float]:
     """Get embedding for a text chunk."""
     try:
@@ -142,17 +125,19 @@ def process_bookmarks(bookmarks: List[Dict], batch_size: int = 5):
                 print(f"No content found for {url}")
                 continue
             
-            chunks = chunk_text(content)
+            # Use the TextChunker to split content into chunks
+            chunks = chunker.split_into_chunks(content)
             print(f"Processing {url} - {len(chunks)} chunks")
             
             embeddings = []
             for j, chunk in enumerate(chunks):
-                print(f"  Chunk {j+1}/{len(chunks)}")
+                print(f"  Chunk {j+1}/{len(chunks)} ({chunker.count_tokens(chunk)} tokens)")
                 embedding = get_embedding(chunk)
                 if embedding:
                     embeddings.append({
                         'chunk': chunk,
-                        'embedding': embedding
+                        'embedding': embedding,
+                        'token_count': chunker.count_tokens(chunk)
                     })
                 time.sleep(0.2)  # Small delay between chunks
             
