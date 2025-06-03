@@ -1,6 +1,6 @@
 # Bookmark Chat
 
-A web application that allows you to chat with your bookmarks using AI.
+A web application that allows you to chat with your bookmarks. Downloads them from Pinboard, fetches each page, builds embeddings, and allows you to chat with them.
 
 ## Features
 
