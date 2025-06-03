@@ -48,7 +48,7 @@ export const useStore = create<Store>()(
       ui: {
         view: 'chat',
         isSidebarOpen: true,
-        theme: 'light',
+        theme: 'dark',
       },
       searchQuery: '',
       filters: [],
