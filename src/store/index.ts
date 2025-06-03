@@ -213,6 +213,11 @@ export const useStore = create<Store>()(
         set({
           filters,
         }),
+
+      setBookmarks: (bookmarks: Bookmark[]) =>
+        set({
+          bookmarks,
+        }),
     }),
     {
       name: 'bookmark-chat-storage',
