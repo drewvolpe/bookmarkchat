@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useStore } from '@/store';
 import { cn } from '@/utils/cn';
+import BookmarkPreview from './BookmarkPreview';
 
 export default function BookmarksView() {
   const { bookmarks, searchQuery, setSearchQuery } = useStore();
@@ -53,14 +54,16 @@ export default function BookmarksView() {
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                   {bookmark.title}
                 </h3>
-                <a
-                  href={bookmark.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 text-sm"
-                >
-                  {bookmark.url}
-                </a>
+                <BookmarkPreview url={bookmark.url} title={bookmark.title}>
+                  <a
+                    href={bookmark.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 text-sm"
+                  >
+                    {bookmark.url}
+                  </a>
+                </BookmarkPreview>
                 {bookmark.description && (
                   <p className="mt-2 text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
                     {bookmark.description}
